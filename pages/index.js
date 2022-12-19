@@ -1,23 +1,100 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import buildspaceLogo from '../assets/buildspace-logo.png';
+import { useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
+import buildspaceLogo from "../assets/buildspace-logo.png";
 
 const Home = () => {
+  const [userInput, setUserInput] = useState("");
+
+  const [apiOutPut, setApiOutput] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const callGenerateEndpoint = async () => {
+    setIsGenerating(true);
+
+    console.log("Calling OpenAI...");
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userInput }),
+    });
+
+    const data = await response.json();
+    const { output } = data;
+    console.log("OpenAI replied...", output.text);
+
+    setApiOutput(`${output.text}`);
+    setIsGenerating(false);
+  };
+
+  const onUserChangedText = (event) => {
+    setUserInput(event.target.value);
+  };
+
   return (
     <div className="root">
+
       <Head>
         <title>GPT-3 Writer | buildspace</title>
       </Head>
+
+      {/* CONTAINER */}
       <div className="container">
+
+        {/* HEADER */}
         <div className="header">
           <div className="header-title">
-            <h1>sup, insert your headline here</h1>
+            <h1>Experience History Through AI-Powered Storytelling</h1>
           </div>
           <div className="header-subtitle">
-            <h2>insert your subtitle here</h2>
+            <h2>
+              Type in a historical subject and let GPT-3 write a story about it.
+            </h2>
+            <p>Eg. "The American Revolution", "The Invention of Flying", "Tupac Shakur" etc.</p>
           </div>
         </div>
+        {/*  */}
+
+        {/* PROMPT CONTAINER */}
+        <div className="prompt-container">
+          <textarea
+            placeholder="insert your prompt here"
+            className="prompt-box"
+            value={userInput}
+            onChange={onUserChangedText}
+          />
+          <div className="prompt-buttons">
+            <a 
+            className={isGenerating ? 'generate-button loading' : 'generate-button'}
+            onClick={callGenerateEndpoint}
+            >
+              <div className="generate">
+                {isGenerating ? <span className="loader"></span> : <p>Generate</p>}
+              </div>
+            </a>
+          </div>
+
+            {/* OUTPUT */}
+          {apiOutPut && (
+            <div className="output">
+              <div className="output-header-container">
+                <div className="output-header">
+                  <h3>Output</h3>
+                </div>
+              </div>
+              <div className="output-content">
+                <p>{apiOutPut}</p>
+              </div>
+            </div>
+          )}
+        </div>
+        {/*  */}
+
       </div>
+      {/*  */}
+
       <div className="badge-container grow">
         <a
           href="https://buildspace.so/builds/ai-writer"
@@ -30,6 +107,7 @@ const Home = () => {
           </div>
         </a>
       </div>
+
     </div>
   );
 };
