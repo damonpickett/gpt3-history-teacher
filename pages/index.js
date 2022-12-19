@@ -89,8 +89,12 @@ const Home = () => {
               </div>
             </div>
           )}
+
         </div>
         {/*  */}
+
+        {/* NEXT PROMPT */}
+        {}
 
       </div>
       {/*  */}
