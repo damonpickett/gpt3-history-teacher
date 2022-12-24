@@ -1,22 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=VT323&display=swap');
+
+/* FONTS */
+/* 
+font-family: 'Orbitron', sans-serif;
+font-family: 'VT323', monospace;
+font-family: 'Source Code Pro', monospace;
+*/
+
+/* COLOURS */
+/* 
+Turqouise #03DEFC
+Green #a0f65e;
+Purple rgb(160, 11, 218)
+*/
+
+/* ANIMATIONS */
+
+.typing-effect {
+    animation: typing 1.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html { font-size: 100%; } /* Remember to add to @media screens when necessary */
+h1 { font-size: 2.074em; }
+h2 { font-size: 1.728em; }
+h3 { font-size: 1.44em; }
+h4 { font-size: 1.2em; }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Source Code Pro', monospace;
 }
 
 .root {
     display: flex;
     place-content: center flex-start;
     align-items: center;
-    background-color: rgb(50, 49, 49);
+    background-color: black;
     flex-flow: column nowrap;
     gap: 10px;
     height: 100vh;
     overflow: auto;
     padding: 0px;
     position: relative;
+}
+
+.standard-div-padding {
+    padding: 10px 0 10px;
 }
 
 .container {
@@ -32,7 +92,7 @@ body {
     padding: 50px;
     position: relative;
     width: auto;
-    gap: 64px;
+    gap: 15px;
 }
 
 .header {    
@@ -40,30 +100,32 @@ body {
     flex-direction: column;
     width: 100%;
     align-items: center;
-    color: #FFF
+    color: #FFF;
+    text-align: center;
 }
 
 .header-title {
     display: flex;
     gap: 12px;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .header-title h1 {
     width: 100%;
     font-weight: 700;
     font-size: 72px;
-    letter-spacing: -4px;
     line-height: 1.2em;
     text-align: center;
     margin: 0;
+    color: #03DEFC;
+    text-shadow: 0 0 2px #03DEFC, 0 0 4px #03DEFC, 0 0 6px #03DEFC;
 }
 
 .header-subtitle h2 {
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.4em;
+    font-size: 2rem;
     color: rgba(255, 255, 255, 0.75);
+    font-family: 'VT323', monospace;
+    color: #a0f65e;
 }
 
 .prompt-container {
@@ -80,7 +142,7 @@ body {
 
 .prompt-box {
     border-bottom-width: 1px;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgb(160, 11, 218);
     border-left-width: 1px;
     border-right-width: 1px;
     border-style: solid;
@@ -88,7 +150,6 @@ body {
     place-content: flex-start;
     align-items: flex-start;
     background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
     display: flex;
     flex: 0 0 auto;
     flex-flow: column nowrap;
@@ -114,12 +175,19 @@ body {
 }
 
 textarea {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Source Code Pro', monospace;
+    color: #a0f65e;
 }
 
 
 .prompt-box:focus {
-    border-color:rgba(255, 255, 255, 0.75)
+    border-color:rgb(210, 131, 241);
+    transition: border-color 0.5s ease-in-out;
+}
+
+.prompt-box:blur {
+    border-color: rgb(160, 11, 218);
+    transition: border-color 0.5s ease-in-out;
 }
 
 
@@ -172,8 +240,7 @@ textarea {
 .generate-button {
     place-content: flex-start;
     align-items: flex-start;
-    background-color: rgb(255, 79, 18);
-    border-radius: 100px;
+    background-color: rgb(160, 11, 218);
     display: flex;
     flex: 0 0 auto;
     flex-flow: column nowrap;
@@ -186,6 +253,11 @@ textarea {
     width: min-content;
     will-change: transform;
     cursor: pointer;
+}
+
+.generate-button:hover {
+    background-color: rgb(210, 131, 241);
+    transition: background-color 0.5s ease-in-out;
 }
 
 .generate {
@@ -284,7 +356,7 @@ textarea {
 
 .output-header-container {
     place-content: center;
-    align-items: center;
+    align-items: left;
     display: flex;
     flex: 0 0 auto;
     flex-flow: column nowrap;
@@ -297,7 +369,7 @@ textarea {
 }
 
 .output-header h3 {
-    font-family: "Manrope", serif;
+    font-family: 'Source Code Pro', monospace;
     font-size: 28px;
     font-style: normal;
     font-weight: 800;
@@ -321,7 +393,7 @@ textarea {
 }
 
 .output-content p {
-    text-align: center;
+    text-align: left;
     white-space: pre-line;
     color: rgba(255, 255, 255, 0.5);
 }
@@ -361,7 +433,7 @@ textarea {
 @media (max-width: 600px) {
     .container {
         max-width: 400px;
-        width: 100%;
+        width: 80%;
     }
 
     .header-title h1 {

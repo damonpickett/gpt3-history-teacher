@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import buildspaceLogo from "../assets/buildspace-logo.png";
 
 const Home = () => {
   const [userInput, setUserInput] = useState("");
-
   const [apiOutPut, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [typingText, setTypingText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  const headerSubtitle = "Experience history through AI powered storytelling";
+  const typingDelay = 75;
 
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
@@ -33,27 +37,44 @@ const Home = () => {
     setUserInput(event.target.value);
   };
 
+  useEffect(() => {
+    let index = 0;
+    const type = () => {
+      if (index < headerSubtitle.length) {
+        setTypingText(typingText + headerSubtitle[index]);
+        index++;
+        setTimeout(type, typingDelay);
+      } else {
+        setIsTyping(false);
+      }
+    };
+
+    type();
+  }, []);
+
   return (
     <div className="root">
-
       <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin
+        ></link>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Source+Code+Pro:wght@200;300;400&family=VT323&display=swap" rel="stylesheet"></link>
         <title>GPT-3 Writer | buildspace</title>
       </Head>
 
       {/* CONTAINER */}
       <div className="container">
-
         {/* HEADER */}
         <div className="header">
-          <div className="header-title">
-            <h1>Experience History Through AI-Powered Storytelling</h1>
+          <div className="header-title standard-div-padding fade-in">
+            <h1>HiStoryteller</h1>
           </div>
-          <div className="header-subtitle">
-            <h2>
-              Type in a historical subject and let GPT-3 write a story about it.
-            </h2>
-            <p>Eg. "The American Revolution", "The Invention of Flying", "Tupac Shakur" etc.</p>
-          </div>
+          {isTyping ? (
+                <div className="header-subtitle standard-div-padding typing-effect" text={headerSubtitle}><h2>{headerSubtitle}</h2></div>
+              ) : ( <div className="header-subtitle standard-div-padding"><h2>{headerSubtitle}</h2></div>)}
         </div>
         {/*  */}
 
@@ -66,22 +87,28 @@ const Home = () => {
             onChange={onUserChangedText}
           />
           <div className="prompt-buttons">
-            <a 
-            className={isGenerating ? 'generate-button loading' : 'generate-button'}
-            onClick={callGenerateEndpoint}
+            <a
+              className={
+                isGenerating ? "generate-button loading" : "generate-button"
+              }
+              onClick={callGenerateEndpoint}
             >
               <div className="generate">
-                {isGenerating ? <span className="loader"></span> : <p>Generate</p>}
+                {isGenerating ? (
+                  <span className="loader"></span>
+                ) : (
+                  <p>Generate</p>
+                )}
               </div>
             </a>
           </div>
 
-            {/* OUTPUT */}
+          {/* OUTPUT */}
           {apiOutPut && (
             <div className="output">
               <div className="output-header-container">
                 <div className="output-header">
-                  <h3>Output</h3>
+                  <h3 className="typing-effect">Output</h3>
                 </div>
               </div>
               <div className="output-content">
@@ -89,13 +116,8 @@ const Home = () => {
               </div>
             </div>
           )}
-
         </div>
         {/*  */}
-
-        {/* NEXT PROMPT */}
-        {}
-
       </div>
       {/*  */}
 
@@ -111,7 +133,6 @@ const Home = () => {
           </div>
         </a>
       </div>
-
     </div>
   );
 };
