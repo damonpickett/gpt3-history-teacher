@@ -128,6 +128,11 @@ body {
     color: #a0f65e;
 }
 
+.instructions {
+    color: white;
+    text-align: center;
+}
+
 .prompt-container {
     place-content: flex-end center;
     align-items: center;

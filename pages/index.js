@@ -76,6 +76,9 @@ const Home = () => {
                 <div className="header-subtitle standard-div-padding typing-effect" text={headerSubtitle}><h2>{headerSubtitle}</h2></div>
               ) : ( <div className="header-subtitle standard-div-padding"><h2>{headerSubtitle}</h2></div>)}
         </div>
+        <div className="instructions">
+          <p>Enter an event or person in the prompt box below and HiStoryteller will spin you a tale. (Eg. "Bay of Pigs", "Meiji Restoration", "Tupac Shakur", etc.)</p>
+        </div>
         {/*  */}
 
         {/* PROMPT CONTAINER */}
